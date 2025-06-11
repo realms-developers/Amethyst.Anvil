@@ -6,12 +6,16 @@ namespace Anvil.Permissions.Storage;
 
 public sealed class StorageConfiguration<T> where T : DataModel
 {
-    public StorageConfiguration() => Configuration.Load();
+    static StorageConfiguration()
+    {
+        Configuration = new($"Anvil.{nameof(T)}", new());
+        Configuration.Load();
+    }
 
     [JsonIgnore]
-    public Configuration<StorageConfiguration<T>> Configuration { get; } = new($"Anvil.{nameof(T)}", new());
+    public static Configuration<StorageConfiguration<T>> Configuration { get; }
     [JsonIgnore]
-    public StorageConfiguration<T> Instance => Configuration.Data;
+    public static StorageConfiguration<T> Instance => Configuration.Data;
 
     public string? MongoConnection { get; set; }
     public string? MongoDatabaseName { get; set; }

@@ -3,6 +3,7 @@ using Amethyst.Extensions.Modules;
 using Amethyst.Systems.Chat;
 using Amethyst.Systems.Users;
 using Anvil.Audit;
+using Anvil.Permissions.Storage;
 using Anvil.Permissions.Working;
 
 namespace Anvil.Permissions;

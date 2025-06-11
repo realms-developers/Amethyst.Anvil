@@ -905,6 +905,7 @@ public static class ModuleCommands
         {
             ctx.Messages.ReplyError("amethyst.reply.permissions.cantAssignRole");
             ctx.Messages.ReplyError("amethyst.reply.permissions.requiredPermissionIs", $"anvil.personal.assign<{roleName}>");
+            return;
         }
 
         targetUser.Role = role.Name;
@@ -949,6 +950,7 @@ public static class ModuleCommands
         {
             ctx.Messages.ReplyError("amethyst.reply.permissions.cantUnassignRole");
             ctx.Messages.ReplyError("amethyst.reply.permissions.requiredPermissionIs", $"anvil.personal.unassign<{targetUser.Role}>");
+            return;
         }
 
         string roleName = targetUser.Role;
@@ -1001,6 +1003,7 @@ public static class ModuleCommands
         {
             ctx.Messages.ReplyError("amethyst.reply.permissions.cantTempAssignRole");
             ctx.Messages.ReplyError("amethyst.reply.permissions.requiredPermissionIs", $"anvil.personal.tempassign<{roleName}>");
+            return;
         }
 
         TimeSpan span = time == null ? TimeSpan.FromMinutes(5) : TimeSpan.FromSeconds(TextUtility.ParseToSeconds(time));
@@ -1055,6 +1058,7 @@ public static class ModuleCommands
         {
             ctx.Messages.ReplyError("amethyst.reply.permissions.cantTempUnassignRole");
             ctx.Messages.ReplyError("amethyst.reply.permissions.requiredPermissionIs", $"anvil.personal.tempunassign<{targetUser.TempRole.Value.Item1}>");
+            return;
         }
 
         string roleName = targetUser.TempRole.Value.Item1;
@@ -1087,6 +1091,7 @@ public static class ModuleCommands
         {
             ctx.Messages.ReplyError("amethyst.reply.permissions.cantAssignGroup");
             ctx.Messages.ReplyError("amethyst.reply.permissions.requiredPermissionIs", $"anvil.personal.assigngroup<{groupName}>");
+            return;
         }
 
         var targetUser = ModuleStorage.Users.Find(userName);
@@ -1138,6 +1143,7 @@ public static class ModuleCommands
         {
             ctx.Messages.ReplyError("amethyst.reply.permissions.cantUnassignGroup");
             ctx.Messages.ReplyError("amethyst.reply.permissions.requiredPermissionIs", $"anvil.personal.unassigngroup<{groupName}>");
+            return;
         }
 
         var targetUser = ModuleStorage.Users.Find(userName);

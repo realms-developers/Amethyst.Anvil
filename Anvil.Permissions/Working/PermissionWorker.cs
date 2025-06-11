@@ -117,11 +117,22 @@ public sealed class PermissionWorker
 
         if (permission.StartsWith("anvil.float"))
         {
-
+            return PersonalPermissions.Contains(permission)
+                ? PermissionAccess.HasPermission
+                : PermissionAccess.Blocked;
+        }
+        
+        if (Permissions.Contains("*") || RolePermissions.Contains("*"))
+        {
+            return PermissionAccess.HasPermission;
+        }
+        else if (Permissions.Contains("!*") || RolePermissions.Contains("!*"))
+        {
+            return PermissionAccess.Blocked;
         }
 
         if (string.IsNullOrEmpty(permission))
-                return PermissionAccess.None;
+            return PermissionAccess.None;
 
         if (Permissions.Contains(permission))
             return PermissionAccess.HasPermission;
