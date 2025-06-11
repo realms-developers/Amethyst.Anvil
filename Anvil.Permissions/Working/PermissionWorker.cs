@@ -1,5 +1,6 @@
 using Amethyst.Permissions.Data.User;
 using Amethyst.Systems.Users.Base.Permissions;
+using Anvil.Permissions.Data.Roles;
 using Anvil.Permissions.Storage;
 
 namespace Anvil.Permissions.Working;
@@ -16,12 +17,22 @@ public sealed class PermissionWorker
 
     public List<string> Permissions { get; set; } = new();
 
+    public List<string> PersonalPermissions { get; set; } = new();
+
+    public RoleModel? RoleModel => TempRoleExpiration.HasValue && TempRoleExpiration.Value > DateTime.UtcNow
+        ? TempRoleModel
+        : RealRoleModel;
+
+    public RoleModel? RealRoleModel { get; set; }
+    public RoleModel? TempRoleModel { get; set; }
+
     public void Assign(UserModel model)
     {
         Unassign();
 
         if (model.InternalGroup != null && !model.InternalGroup.IsDisabled)
         {
+            PersonalPermissions.AddRange(model.InternalGroup.Permissions);
             Permissions.AddRange(model.InternalGroup.Permissions);
         }
         if (model.Groups != null && model.Groups.Count > 0)
@@ -38,6 +49,9 @@ public sealed class PermissionWorker
 
         if (model.TempRole.HasValue && model.TempRole.Value.Item2 > DateTime.UtcNow)
         {
+            TempRoleExpiration = model.TempRole.Value.Item2;
+            TempRoleModel = ModuleStorage.Roles.Find(model.TempRole.Value.Item1);
+
             List<string> handleRolePermissions = new();
             HandleRole(model.Role, ref handleRolePermissions);
             TempRolePermissions = handleRolePermissions;
@@ -45,6 +59,8 @@ public sealed class PermissionWorker
 
         if (!string.IsNullOrEmpty(model.Role))
         {
+            RealRoleModel = ModuleStorage.Roles.Find(model.Role);
+
             List<string> handleRolePermissions = new();
             HandleRole(model.Role, ref handleRolePermissions);
             RealRolePermissions = handleRolePermissions;
@@ -75,13 +91,49 @@ public sealed class PermissionWorker
 
     public void Unassign()
     {
+        PersonalPermissions = new List<string>();
         Permissions = new List<string>();
         TempRoleExpiration = null;
         TempRolePermissions = new List<string>();
         RealRolePermissions = new List<string>();
     }
 
-    private PermissionAccess HasPartedPermission(string[] array, List<string> perms)
+    public PermissionAccess HasPermission(string permission)
+    {
+        if (permission.StartsWith("hasrole"))
+        {
+            return RoleModel != null && permission == $"hasrole<{RoleModel.Name}>"
+                ? PermissionAccess.HasPermission
+                : PermissionAccess.None;
+        }
+        
+        if (permission.StartsWith("hasgroup"))
+        {
+            string groupName = permission.Substring(9, permission.Length - 10);
+            return RoleModel != null && RoleModel.Groups.Contains(groupName)
+                ? PermissionAccess.HasPermission
+                : PermissionAccess.None;
+        }
+
+        if (permission.StartsWith("anvil.float"))
+        {
+
+        }
+
+        if (string.IsNullOrEmpty(permission))
+                return PermissionAccess.None;
+
+        if (Permissions.Contains(permission))
+            return PermissionAccess.HasPermission;
+
+        if (Permissions.Contains("!" + permission))
+            return PermissionAccess.Blocked;
+
+        string[] permArray = permission.Split('.');
+        return HasPartedPermission(permArray, Permissions) ?? HasPartedPermission(permArray, RolePermissions) ?? PermissionAccess.None;
+    }
+
+    private PermissionAccess? HasPartedPermission(string[] array, List<string> perms)
     {
         foreach (string part in array)
         {
@@ -96,6 +148,6 @@ public sealed class PermissionWorker
             }
         }
 
-        return PermissionAccess.None;
+        return null;
     }
 }

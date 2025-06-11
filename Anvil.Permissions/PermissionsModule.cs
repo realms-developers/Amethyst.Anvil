@@ -1,5 +1,6 @@
 ﻿using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Modules;
+using Amethyst.Systems.Chat;
 using Amethyst.Systems.Users;
 using Anvil.Audit;
 using Anvil.Permissions.Working;
@@ -22,5 +23,7 @@ public static class PermissionsModule
         _initialized = true;
 
         UsersOrganizer.PlayerUsers.PermissionProviderBuilder = new AnvilProviderBuilder();
+
+        ServerChat.RendererRegistry.Add(new AnvilChatRenderer());
     }
 }

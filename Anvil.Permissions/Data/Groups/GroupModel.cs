@@ -12,7 +12,6 @@ public sealed class GroupModel : DataModel
     }
 
     public string? Tag { get; set; }
-    public ModelMetadata Metadata { get; set; } = new();
     public bool IsDisabled { get; set; }
     public List<string> Permissions { get; set; } = new();
 

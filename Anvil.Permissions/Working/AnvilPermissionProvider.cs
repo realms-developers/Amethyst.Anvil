@@ -55,16 +55,57 @@ public sealed class AnvilPermissionProvider : IPermissionProvider
 
     public PermissionAccess HasPermission(string permission)
     {
-        throw new NotImplementedException();
+        if (User.Suspensions?.IsSuspended == true)
+        {
+            return ChildHandlePermission(p => p.HasPermission(permission));
+        }
+
+        var result = Worker.HasPermission(permission);
+        return result == PermissionAccess.None ? ChildHandlePermission(p => p.HasPermission(permission)) : result;
     }
 
-    public PermissionAccess HasPermission(PermissionAccess type, int x, int y)
+    public PermissionAccess HasPermission(PermissionType type, int x, int y)
     {
-        throw new NotImplementedException();
+        return HandleWorldPermission(type) ?? ChildHandlePermission(p => p.HasPermission(type, x, y));
     }
 
-    public PermissionAccess HasPermission(PermissionAccess type, int x, int y, int width, int height)
+    public PermissionAccess HasPermission(PermissionType type, int x, int y, int width, int height)
     {
-        throw new NotImplementedException();
+        return HandleWorldPermission(type) ?? ChildHandlePermission(p => p.HasPermission(type, x, y));
+    }
+
+
+    private PermissionAccess ChildHandlePermission(Func<IPermissionProvider, PermissionAccess> action)
+    {
+        bool hasPermission = false;
+
+        foreach (var provider in _childProviders)
+        {
+            var result = action(provider);
+            if (result == PermissionAccess.HasPermission)
+            {
+                hasPermission = true;
+                break;
+            }
+            else if (result == PermissionAccess.Blocked)
+            {
+                return PermissionAccess.Blocked;
+            }
+        }
+
+        return hasPermission ? PermissionAccess.HasPermission : PermissionAccess.None;
+    }
+
+    private PermissionAccess? HandleWorldPermission(PermissionType type)
+    {
+        if (User.Suspensions?.IsSuspended != true)
+        {
+            if (HasPermission("world." + type.ToString().ToLowerInvariant()) != PermissionAccess.HasPermission)
+            {
+                return PermissionAccess.Blocked;
+            }
+        }
+
+        return null;
     }
 }

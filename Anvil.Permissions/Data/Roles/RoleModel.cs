@@ -1,3 +1,4 @@
+using Amethyst.Network.Structures;
 using Amethyst.Storages.Mongo;
 using Anvil.Permissions.Data.Groups;
 using Anvil.Permissions.Storage;
@@ -19,6 +20,10 @@ public sealed class RoleModel : DataModel
     public GroupModel InternalGroup { get; set; }
     public List<string> Groups { get; set; } = new();
     public bool IsDefault { get; set; }
+
+    public string? Prefix { get; set; }
+    public string? Suffix { get; set; }
+    public NetColor? Color { get; set; }
 
     public override void Save()
     {
