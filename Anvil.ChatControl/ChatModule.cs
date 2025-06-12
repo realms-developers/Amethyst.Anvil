@@ -1,7 +1,10 @@
 ﻿using Amethyst;
 using Amethyst.Extensions.Base.Metadata;
 using Amethyst.Extensions.Modules;
+using Amethyst.Hooks;
 using Amethyst.Systems.Chat;
+using Anvil.ChatControl.Misc;
+using Anvil.ChatControl.Output;
 
 namespace Anvil.ChatControl;
 
@@ -39,5 +42,13 @@ public static class ChatModule
 
         ServerChat.HandlerRegistry.Add(new Handling.AnvilChatHandler());
         AmethystLog.System.Info("ChatControl", "AnvilChatHandler added to HandlerRegistry.");
+
+        ServerChat.MessagePlayerJoined.SetRenderer(null);
+        ServerChat.MessagePlayerJoined.SetRenderer(new PlayerJoinedRenderer());
+
+        ServerChat.MessagePlayerLeft.SetRenderer(null);
+        ServerChat.MessagePlayerLeft.SetRenderer(new PlayerLeftRenderer());
+
+        HookRegistry.RegisterHook<ModuleChatArgs>(false, false);
     }
 }

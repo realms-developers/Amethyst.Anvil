@@ -1,3 +1,5 @@
+using System.Security.Policy;
+using Amethyst.Network.Structures;
 using Amethyst.Storages.Config;
 
 namespace Anvil.ChatControl;
@@ -19,4 +21,10 @@ public sealed class ChatConfiguration
     public bool EnableChatDelay { get; set; } = true;
 
     public List<string> BanWords { get; set; } = [];
+
+    public string PlayerJoinedFormat { get; set; } = "{players}/{maxplayers} {name} has joined.";
+    public NetColor PlayerJoinedColor { get; set; } = new NetColor(0, 255, 0);
+
+    public string PlayerLeftFormat { get; set; } = "{players}/{maxplayers} {name} has left.";
+    public NetColor PlayerLeftColor { get; set; } = new NetColor(255, 0, 0);
 }
