@@ -38,15 +38,12 @@ public sealed class AnvilChatOutput : IChatMessageOutput
                 continue;
             }
 
-            Console.WriteLine($"Processing part: {part}");
-
             bool canContinue = false;
             var key = part.Trim('{', '}');
             if (key.Contains('|'))
             {
                 foreach (var subpart in key.Split('|'))
                 {
-                    Console.WriteLine($"Checking subpart: {subpart}");
                     if (GetValueOrDefault(subpart, out var value1))
                     {
                         output = output.Replace(part, value1);
@@ -60,7 +57,6 @@ public sealed class AnvilChatOutput : IChatMessageOutput
                     continue;
             }
 
-            Console.WriteLine($"Not found in by | : {key}");
 
             output = GetValueOrDefault(key, out var value2) ?
                 output.Replace(part, value2) :
