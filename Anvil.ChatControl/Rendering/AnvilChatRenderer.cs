@@ -10,6 +10,10 @@ public sealed class AnvilChatRenderer : IChatMessageRenderer
     public void Render(MessageRenderContext ctx)
     {
         ctx.Name.TryAdd("realname", ctx.Player.Name);
+        ctx.Name.TryAdd("realtext", ctx.Message.Text);
+
+        if (ctx.Message.ModifiedText != null)
+            ctx.Name.TryAdd("modifiedtext", ctx.Message.ModifiedText);
 
         ctx.Prefix.Add("anvil.chat.life", ctx.Player.Life.ToString());
         ctx.Prefix.Add("anvil.chat.maxlife", ctx.Player.MaxLife.ToString());

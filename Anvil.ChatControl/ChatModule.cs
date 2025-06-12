@@ -32,9 +32,12 @@ public static class ChatModule
         }
 
         ServerChat.OutputRegistry.Add(new Output.AnvilChatOutput());
-        AmethystLog.System.Info("ChatControl", "ConfigurableOutput added to OutputRegistry.");
+        AmethystLog.System.Info("ChatControl", "AnvilChatOutput added to OutputRegistry.");
 
         ServerChat.RendererRegistry.Add(new Rendering.AnvilChatRenderer());
-        AmethystLog.System.Info("ChatControl", "EnhancedChatRenderer added to RendererRegistry.");
+        AmethystLog.System.Info("ChatControl", "AnvilChatRenderer added to RendererRegistry.");
+
+        ServerChat.HandlerRegistry.Add(new Handling.AnvilChatHandler());
+        AmethystLog.System.Info("ChatControl", "AnvilChatHandler added to HandlerRegistry.");
     }
 }

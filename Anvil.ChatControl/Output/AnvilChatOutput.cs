@@ -13,32 +13,61 @@ public sealed class AnvilChatOutput : IChatMessageOutput
 
     public void OutputMessage(MessageRenderResult message)
     {
+        bool GetValueOrDefault(string key, out string? outValue)
+        {
+            if (message.Prefix.TryGetValue(key, out var value) ||
+                message.Name.TryGetValue(key, out value) ||
+                message.Suffix.TryGetValue(key, out value) ||
+                message.Text.TryGetValue(key, out value))
+            {
+                outValue = value;
+                return true;
+            }
+
+            outValue = null;
+            return false;
+        }
+
         List<string> configParts = ParseConfig();
         string output = ChatConfiguration.Instance.OutputFormat;
 
         foreach (var part in configParts)
         {
+            if (!part.StartsWith("{") || !part.EndsWith("}"))
+            {
+                continue;
+            }
+
+            Console.WriteLine($"Processing part: {part}");
+
             bool canContinue = false;
             var key = part.Trim('{', '}');
-            foreach (var subpart in part.Split('|'))
+            if (key.Contains('|'))
             {
-                if (message.Prefix.TryGetValue(key, out var value) ||
-                    message.Name.TryGetValue(key, out value) ||
-                    message.Suffix.TryGetValue(key, out value) ||
-                    message.Text.TryGetValue(key, out value))
+                foreach (var subpart in key.Split('|'))
                 {
-                    output = output.Replace($"{{{key}}}", value);
+                    Console.WriteLine($"Checking subpart: {subpart}");
+                    if (GetValueOrDefault(subpart, out var value1))
+                    {
+                        output = output.Replace(part, value1);
 
-                    canContinue = true;
-                    break;
+                        canContinue = true;
+                        break;
+                    }
                 }
+
+                if (canContinue)
+                    continue;
             }
 
-            if (!canContinue)
-            {
-                output = output.Replace($"{{{key}}}", string.Empty);
-            }
+            Console.WriteLine($"Not found in by | : {key}");
+
+            output = GetValueOrDefault(key, out var value2) ?
+                output.Replace(part, value2) :
+                output.Replace(part, string.Empty);
         }
+
+        output = output.Trim('{').Trim('}');
 
         AmethystLog.Main.Info("Chat", output.RemoveColorTags());
         PlayerUtils.BroadcastText(output, message.Color.R, message.Color.G, message.Color.B);
@@ -49,24 +78,34 @@ public sealed class AnvilChatOutput : IChatMessageOutput
     private List<string> ParseConfig()
     {
         var config = ChatConfiguration.Instance.OutputFormat;
-        var parts = config.Split(' ');
-        var result = new List<string>();
+        var parts = new List<string>();
+        int startIndex = 0;
 
-        foreach (var part in parts)
+        while (startIndex < config.Length)
         {
-            if (part.StartsWith("{") && part.EndsWith("}"))
+            int openBraceIndex = config.IndexOf('{', startIndex);
+            if (openBraceIndex == -1)
             {
-                // Handle placeholders
-                var placeholder = part.Trim('{', '}');
-                result.Add($"{{{placeholder}}}");
+                parts.Add(config.Substring(startIndex));
+                break;
             }
-            else
+
+            if (openBraceIndex > startIndex)
             {
-                // Regular text
-                result.Add(part);
+                parts.Add(config.Substring(startIndex, openBraceIndex - startIndex));
             }
+
+            int closeBraceIndex = config.IndexOf('}', openBraceIndex);
+            if (closeBraceIndex == -1)
+            {
+                parts.Add(config.Substring(openBraceIndex));
+                break;
+            }
+
+            parts.Add(config.Substring(openBraceIndex, closeBraceIndex - openBraceIndex + 1));
+            startIndex = closeBraceIndex + 1;
         }
 
-        return result;
+        return parts;   
     }
 }

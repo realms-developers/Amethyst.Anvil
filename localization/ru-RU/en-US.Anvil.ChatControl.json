@@ -1,0 +1,23 @@
+{
+    "chat.bannedword": "Вы использовали запрещённое слово в вашем сообщении: {0}",
+    "chat.delay": "Ваше сообщение не было отправлено, пожалуйста, не спамьте в чате.",
+
+    "amethyst.reply.mchat.setformat": "Формат чата установлен: {0}",
+    "amethyst.reply.mchat.getformat": "Текущий формат чата: {0}",
+    "amethyst.reply.mchat.setdelay": "Задержка чата установлена: {0} секунд.",
+    "amethyst.reply.mchat.getdelay": "Текущая задержка чата: {0} секунд.",
+    "amethyst.reply.mchat.addbanword.empty": "Вы должны указать слово для блокировки.",
+    "amethyst.reply.mchat.banword.exists": "Слово \"{0}\" уже заблокировано.",
+    "amethyst.reply.mchat.addbanword": "Запрещённое слово добавлено: {0}",
+    "amethyst.reply.mchat.removebanword.empty": "Вы должны указать слово для удаления.",
+    "amethyst.reply.mchat.banword.notexists": "Слова \"{0}\" нет в списке запрещённых.",
+    "amethyst.reply.mchat.removebanword": "Запрещённое слово удалено: {0}",
+    "amethyst.reply.mchat.listbanwords": "Запрещённые слова",
+    "amethyst.desc.mchat.setformat": "Установить формат сообщений чата.",
+    "amethyst.desc.mchat.getformat": "Показать текущий формат сообщений чата.",
+    "amethyst.desc.mchat.setdelay": "Установить задержку между сообщениями в чате.",
+    "amethyst.desc.mchat.getdelay": "Показать текущую задержку сообщений в чате.",
+    "amethyst.desc.mchat.addbanword": "Добавить слово в список запрещённых.",
+    "amethyst.desc.mchat.removebanword": "Удалить слово из списка запрещённых.",
+    "amethyst.desc.mchat.listbanwords": "Показать все запрещённые слова."
+}

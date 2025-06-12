@@ -1,0 +1,23 @@
+{
+    "chat.bannedword": "You have used a banned word in your message: {0}",
+    "chat.delay": "Your message was not sent, please do not spam the chat.",
+
+    "amethyst.reply.mchat.setformat": "Chat format set to: {0}",
+    "amethyst.reply.mchat.getformat": "Current chat format: {0}",
+    "amethyst.reply.mchat.setdelay": "Chat delay set to: {0} seconds.",
+    "amethyst.reply.mchat.getdelay": "Current chat delay: {0} seconds.",
+    "amethyst.reply.mchat.addbanword.empty": "You must specify a word to ban.",
+    "amethyst.reply.mchat.banword.exists": "The word \"{0}\" is already banned.",
+    "amethyst.reply.mchat.addbanword": "Banned word added: {0}",
+    "amethyst.reply.mchat.removebanword.empty": "You must specify a word to remove.",
+    "amethyst.reply.mchat.banword.notexists": "The word \"{0}\" is not in the banned list.",
+    "amethyst.reply.mchat.removebanword": "Banned word removed: {0}",
+    "amethyst.reply.mchat.listbanwords": "Banned words",
+    "amethyst.desc.mchat.setformat": "Set the chat message format.",
+    "amethyst.desc.mchat.getformat": "Show the current chat message format.",
+    "amethyst.desc.mchat.setdelay": "Set the delay between chat messages.",
+    "amethyst.desc.mchat.getdelay": "Show the current chat message delay.",
+    "amethyst.desc.mchat.addbanword": "Add a word to the banned words list.",
+    "amethyst.desc.mchat.removebanword": "Remove a word from the banned words list.",
+    "amethyst.desc.mchat.listbanwords": "List all banned words."
+}

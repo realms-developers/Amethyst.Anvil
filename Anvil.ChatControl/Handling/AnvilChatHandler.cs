@@ -24,6 +24,7 @@ public sealed class AnvilChatHandler : IChatMessageHandler
         if (!ext.CheckCanSendMessage())
         {
             msg.Player.User.Messages.ReplyError("chat.delay");
+            msg.Cancel();
             return;
         }
 
