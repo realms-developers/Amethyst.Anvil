@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Amethyst.API\src\Amethyst.Server.csproj" />
+    <ProjectReference Include="..\Anvil.Audit\Anvil.Audit.csproj" />
+    <Reference Include="FNA">
+      <HintPath>..\..\Amethyst.API\deps\FNA.dll</HintPath>
+    </Reference>
+    <Reference Include="TerrariaAPI">
+      <HintPath>..\..\Amethyst.API\deps\TerrariaAPI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
