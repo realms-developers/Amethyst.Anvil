@@ -1,5 +1,4 @@
 using Amethyst.Storages.Mongo;
-using Anvil.ChatControl;
 using Anvil.Regions.Data.Models;
 
 namespace Anvil.Regions.Data;

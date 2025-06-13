@@ -1,9 +1,11 @@
 using Amethyst.Storages.Mongo;
 using Amethyst.Systems.Users.Base;
 using Amethyst.Systems.Users.Base.Permissions;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Anvil.Regions.Data.Models;
 
+[BsonIgnoreExtraElements]
 public sealed class RegionModel : DataModel
 {
     public RegionModel(string name) : base(name)
@@ -55,7 +57,7 @@ public sealed class RegionModel : DataModel
         }
 
         return rank;
-    }   
+    }
 
     public override void Save()
     {
