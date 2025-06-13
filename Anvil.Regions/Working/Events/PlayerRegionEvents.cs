@@ -19,7 +19,7 @@ public static class PlayerRegionEvents
         HookRegistry.RegisterHook<PlayerRegionLeaveArgs>(false, false);
         HookRegistry.RegisterHook<PlayerRegionStayingArgs>(false, false);
 
-        UpdateTimer = new Timer(UpdateRegions, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+        UpdateTimer = new Timer(UpdateRegions, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(250));
     }
 
     private static void UpdateRegions(object? state)
