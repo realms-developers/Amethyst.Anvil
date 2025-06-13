@@ -6,6 +6,9 @@
     <Reference Include="FNA">
       <HintPath>..\..\Amethyst.API\deps\FNA.dll</HintPath>
     </Reference>
+    <Reference Include="TerrariaAPI">
+      <HintPath>..\..\Amethyst.API\deps\TerrariaAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <PropertyGroup>

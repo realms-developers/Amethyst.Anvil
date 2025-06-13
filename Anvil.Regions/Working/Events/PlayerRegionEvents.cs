@@ -4,12 +4,14 @@ using Amethyst.Network.Handling.Packets.Handshake;
 using Amethyst.Server.Entities;
 using Anvil.Regions.Data.Models;
 using Anvil.Regions.Working.Extensions;
+using Anvil.Regions.Working.Users;
 
 namespace Anvil.Regions.Working.Events;
 
 public static class PlayerRegionEvents
 {
     internal static Timer? UpdateTimer;
+    internal static ExecutorUser User = new ExecutorUser();
 
     internal static void Initialize()
     {
@@ -43,6 +45,13 @@ public static class PlayerRegionEvents
                 {
                     if (ext.CurrentRegion != null)
                     {
+                        foreach (var cmd in ext.CurrentRegion.ExitCommands)
+                        {
+                            User.Commands.RunCommand(cmd.Replace("$PLAYER_ID$", plr.Index.ToString())
+                                                        .Replace("$PLAYER_NAME$", plr.Name)
+                                                        .Replace("$REGION_NAME$", ext.CurrentRegion.Name));
+                        }
+
                         HookRegistry.GetHook<PlayerRegionLeaveArgs>().Invoke(new PlayerRegionLeaveArgs(plr.User, ext.CurrentRegion));
                     }
 
@@ -50,11 +59,25 @@ public static class PlayerRegionEvents
 
                     if (region != null)
                     {
+                        foreach (var cmd in region.EnterCommands)
+                        {
+                            User.Commands.RunCommand(cmd.Replace("$PLAYER_ID$", plr.Index.ToString())
+                                                        .Replace("$PLAYER_NAME$", plr.Name)
+                                                        .Replace("$REGION_NAME$", region.Name));
+                        }
+
                         HookRegistry.GetHook<PlayerRegionEnterArgs>().Invoke(new PlayerRegionEnterArgs(plr.User, region));
                     }
                 }
                 else if (ext.CurrentRegion != null)
                 {
+                    foreach (var cmd in ext.CurrentRegion.StayingCommands)
+                    {
+                        User.Commands.RunCommand(cmd.Replace("$PLAYER_ID$", plr.Index.ToString())
+                                                    .Replace("$PLAYER_NAME$", plr.Name)
+                                                    .Replace("$REGION_NAME$", ext.CurrentRegion.Name));
+                    }
+
                     HookRegistry.GetHook<PlayerRegionStayingArgs>().Invoke(new PlayerRegionStayingArgs(plr.User, ext.CurrentRegion));
                 }
             }

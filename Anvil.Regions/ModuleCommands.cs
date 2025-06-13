@@ -77,6 +77,8 @@ public static class ModuleCommands
         RegionsModule.ReloadRegions();
         user.Messages.ReplySuccess("anvil.regions.regionDefined", name);
 
+        extension.Selection = null;
+
         RegionsModule.AuditInstance.Log(
             "rg.define", $"Region '{name}' defined by {user.Name} at ({model.X}, {model.Y}) to ({model.X2}, {model.Y2}).", [$"region:{name}"], user.Name, new()
             {

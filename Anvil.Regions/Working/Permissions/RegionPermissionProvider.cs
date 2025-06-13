@@ -78,7 +78,7 @@ public sealed class RegionPermissionProvider : IPermissionProvider
             return PermissionAccess.Blocked;
         }
 
-        return PermissionAccess.HasPermission;
+        return PermissionAccess.None;
     }
     
     private bool CheckRegionSettings(RegionModel region, PermissionType type)
@@ -97,6 +97,6 @@ public sealed class RegionPermissionProvider : IPermissionProvider
         if (region.Roles.Any(p => User.Permissions.HasPermission($"hasrole<{p.Name}>") == PermissionAccess.HasPermission))
             return true;
 
-        return true;
+        return false;
     }
 }
