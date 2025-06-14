@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Amethyst.API\src\Amethyst.Server.csproj" />
-    <ProjectReference Include="..\Anvil.Audit\Anvil.Audit.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Amethyst.Server" Version="10.*" />
+    <ProjectReference Include="..\Anvil.Audit\Anvil.Audit.csproj" />
+  </ItemGroup>
 </Project>

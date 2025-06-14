@@ -17,9 +17,7 @@ public static class ChatModule
     public static void Initialize()
     {
         if (_initialized)
-        {
             return;
-        }
 
         _initialized = true;
 

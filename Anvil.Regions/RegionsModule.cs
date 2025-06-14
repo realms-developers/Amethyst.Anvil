@@ -4,7 +4,6 @@ using Amethyst.Hooks;
 using Amethyst.Hooks.Args.Players;
 using Amethyst.Hooks.Context;
 using Amethyst.Kernel;
-using Amethyst.Network;
 using Amethyst.Network.Handling.Base;
 using Anvil.Audit;
 using Anvil.Regions.Data;
@@ -21,15 +20,15 @@ public static class RegionsModule
     public static IReadOnlyList<RegionModel> Regions => _regions.AsReadOnly();
     private static List<RegionModel> _regions = new();
 
-    private static bool _isInitialized;
+    private static bool _initialized;
 
     [ModuleInitialize]
     public static void Initialize()
     {
-        if (_isInitialized)
-        {
+        if (_initialized)
             return;
-        }
+
+        _initialized = true;
 
         ReloadRegions();
 
