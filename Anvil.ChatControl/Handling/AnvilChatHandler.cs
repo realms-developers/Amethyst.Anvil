@@ -1,5 +1,5 @@
-using Amethyst.Systems.Chat;
 using Amethyst.Systems.Chat.Base;
+using Amethyst.Systems.Chat.Base.Models;
 
 namespace Anvil.ChatControl.Handling;
 

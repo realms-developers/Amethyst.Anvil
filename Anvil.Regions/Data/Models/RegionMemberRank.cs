@@ -1,4 +1,4 @@
-namespace Anvil.Regions.Data;
+namespace Anvil.Regions.Data.Models;
 
 public enum RegionMemberRank
 {

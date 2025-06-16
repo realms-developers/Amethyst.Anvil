@@ -1,5 +1,4 @@
 ﻿using Amethyst.Extensions.Base.Metadata;
-using Amethyst.Extensions.Modules;
 using Amethyst.Storages.Mongo;
 
 namespace Anvil.Audit;

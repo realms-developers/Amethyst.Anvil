@@ -1,4 +1,4 @@
-using Amethyst.Server.Systems.Chat.Base;
+using Amethyst.Systems.Chat.Base;
 using Amethyst.Systems.Chat.Base.Models;
 
 namespace Anvil.Permissions.Working;
