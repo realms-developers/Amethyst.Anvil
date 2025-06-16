@@ -29,6 +29,7 @@ public sealed class MarkingHandler : INetworkHandler
             return;
         }
 
+        ignore = true;
         if (ext.Selection == null || ext.Selection.PointsSet || !ext.CanSetPoint())
         {
             return;
@@ -36,12 +37,12 @@ public sealed class MarkingHandler : INetworkHandler
 
         if (ext.Selection.Point1Set)
         {
-            ext.Selection.SetPoint2(packet.TileX, packet.TileY);
+            ext.Selection.SetPoint1(packet.TileX, packet.TileY);
             plr.User.Messages.ReplyInfo("anvil.regions.setpoint1", packet.TileX, packet.TileY);
         }
         else
         {
-            ext.Selection.SetPoint1(packet.TileX, packet.TileY);
+            ext.Selection.SetPoint2(packet.TileX, packet.TileY);
             plr.User.Messages.ReplyInfo("anvil.regions.setpoint2", packet.TileX, packet.TileY);
             plr.User.Messages.ReplyInfo("anvil.regions.useCommandToDefineRegion");
         }
