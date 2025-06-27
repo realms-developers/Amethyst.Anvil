@@ -134,10 +134,10 @@ public sealed class PermissionWorker
         if (string.IsNullOrEmpty(permission))
             return PermissionAccess.None;
 
-        if (Permissions.Contains(permission))
+        if (Permissions.Contains(permission) || RolePermissions.Contains(permission))
             return PermissionAccess.HasPermission;
 
-        if (Permissions.Contains("!" + permission))
+        if (Permissions.Contains("!" + permission) || RolePermissions.Contains("!" + permission))
             return PermissionAccess.Blocked;
 
         string[] permArray = permission.Split('.');
