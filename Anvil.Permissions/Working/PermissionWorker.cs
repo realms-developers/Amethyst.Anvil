@@ -146,14 +146,18 @@ public sealed class PermissionWorker
 
     private PermissionAccess? HasPartedPermission(string[] array, List<string> perms)
     {
+        string currentPermission = "";
+
         foreach (string part in array)
         {
-            if (perms.Contains("!" + part + ".*"))
+            currentPermission += part + ".";
+
+            if (perms.Contains("!" + currentPermission + "*"))
             {
                 return PermissionAccess.Blocked;
             }
 
-            if (perms.Contains(part + ".*"))
+            if (perms.Contains(currentPermission + "*"))
             {
                 return PermissionAccess.HasPermission;
             }
