@@ -29,11 +29,11 @@ public sealed class MarkingHandler : INetworkHandler
             return;
         }
 
-        ignore = true;
         if (ext.Selection == null || ext.Selection.PointsSet || !ext.CanSetPoint())
         {
             return;
         }
+        ignore = true;
 
         if (ext.Selection.Point1Set)
         {

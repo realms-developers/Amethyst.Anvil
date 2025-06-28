@@ -70,7 +70,7 @@ public sealed class RegionPermissionProvider : IPermissionProvider
     private PermissionAccess HandleHasPermission(RegionModel? region, PermissionType type)
     {
         if (region == null)
-            return PermissionAccess.None;
+            return PermissionAccess.HasPermission;
 
         if (!CheckRegionSettings(region, type))
         {
@@ -78,7 +78,7 @@ public sealed class RegionPermissionProvider : IPermissionProvider
             return PermissionAccess.Blocked;
         }
 
-        return PermissionAccess.None;
+        return PermissionAccess.HasPermission;
     }
     
     private bool CheckRegionSettings(RegionModel region, PermissionType type)

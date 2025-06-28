@@ -94,7 +94,7 @@ public sealed class ProtectionHandler : INetworkHandler
 
     private void OnSignSync(PlayerEntity plr, ref SignSync packet, ReadOnlySpan<byte> rawPacket, ref bool ignore)
     {
-        ignore |= HandleXY(plr, packet.SignX, packet.SignY, PermissionType.SignWrite);   
+        ignore |= HandleXY(plr, packet.SignX, packet.SignY, PermissionType.SignWrite);
     }
 
     private void OnTryPlaceItemWeaponsRack(PlayerEntity plr, ref TETryPlaceItemWeaponsRack packet, ReadOnlySpan<byte> rawPacket, ref bool ignore)

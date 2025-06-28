@@ -98,14 +98,13 @@ public sealed class AnvilPermissionProvider : IPermissionProvider
 
     private PermissionAccess? HandleWorldPermission(PermissionType type)
     {
-        if (User.Suspensions?.IsSuspended != true)
+        if (User.Suspensions?.IsSuspended == true)
         {
-            if (HasPermission("world." + type.ToString().ToLowerInvariant()) != PermissionAccess.HasPermission)
-            {
-                return PermissionAccess.Blocked;
-            }
+            Console.WriteLine($"Suspended => Blocked");
+            return PermissionAccess.Blocked;
         }
 
-        return null;
+        Console.WriteLine($"Not suspended => {HasPermission("world." + type.ToString().ToLowerInvariant()) != PermissionAccess.HasPermission}");
+        return HasPermission("world." + type.ToString().ToLowerInvariant()) != PermissionAccess.HasPermission ? PermissionAccess.Blocked : null;;
     }
 }
